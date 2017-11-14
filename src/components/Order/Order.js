@@ -23,7 +23,6 @@ export default class Order extends React.Component {
     event.preventDefault();
     if (this.validate()) {
       this.props.handleSubmit(this.state);
-
       this.formClear();
     }
   };
