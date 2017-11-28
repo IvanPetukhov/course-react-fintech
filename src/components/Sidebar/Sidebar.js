@@ -9,7 +9,7 @@ import {
 
 import './Sidebar.css';
 
-const Sidebar = ({ accounts }) => {
+const Sidebar = ({ accounts, operations }) => {
   const accountKeys = Object.keys(accounts);
 
   return (
@@ -20,6 +20,13 @@ const Sidebar = ({ accounts }) => {
 
       {accountKeys.map(key => {
         const account = accounts[key];
+        const sum = Object.keys(operations).reduce(
+          (opSum, current) => {
+            if (operations[current].account === key && !isNaN(parseFloat(operations[current].amount))) {
+              opSum += parseFloat(operations[current].amount);
+            }
+            return opSum;
+          }, 0);
 
         return (
           <NavLink key={key} to={`/account/${key}`} className='Link' activeClassName='Link--active'>
@@ -28,7 +35,7 @@ const Sidebar = ({ accounts }) => {
                 {account.name}
               </div>
               <div className='Sidebar__account-amount'>
-                <Money value={account.amount} currency={account.currency} />
+                <Money value={sum} currency={account.currency} />
               </div>
             </div>
           </NavLink>
@@ -50,8 +57,9 @@ Sidebar.defaultProps = {
   accounts: {}
 };
 
-const mapStateToProps = state => ({
-  accounts: state.accounts
+const mapStateToProps = ({accounts, operations}) => ({
+  accounts,
+  operations
 });
 
 
