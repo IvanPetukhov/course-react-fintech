@@ -46,7 +46,7 @@ describe('httpRequest', () => {
   beforeEach(() => {
     store = { dispatch: jest.fn() };
     next = jest.fn();
-    request = httpRequest(store)(next)
+    request = httpRequest(store)(next);
   });
 
   describe('Перехватывание экшены', () => {
@@ -62,7 +62,7 @@ describe('httpRequest', () => {
       request({ type: 'API_REQUEST', request: { API: 'kkk', method: 'get' }, call: { success: 'ACCOUNT_SUCCES', fail: 'ACCOUNT_FAIL' } });
 
       expect(next).not.toBeCalled();
-    })
+    });
   });
 
   describe('Перехватили', () => {
